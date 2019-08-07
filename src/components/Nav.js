@@ -3,18 +3,26 @@ import './../index.scss';
 import menuIcon from './../img/menu.jpg';
 import searchIcon from './../img/search.png';
 import backIcon from './../img/arrow_left.png';
+import { connect } from 'react-redux';
+import { selectCountry } from './../actions/selectNation';
 
-export default class Nav extends Component {
+export  class Nav extends Component {
     constructor(props){
         super(props);
         this.state = {
             isSidebarOpen: false,
-            isSearchbarOpen: false
+            isSearchbarOpen: false,
+            countrySelected: 'id'
         }
         this.sidebarOpen = this.sidebarOpen.bind(this);
         this.sidebarClose = this.sidebarClose.bind(this);
         this.searchbarOpen = this.searchbarOpen.bind(this);
         this.searchbarClose = this.searchbarClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    componentDidUpdate(){
+        this.props.onSelectCountry(this.state.countrySelected);
     }
 
     sidebarOpen(){
@@ -41,6 +49,12 @@ export default class Nav extends Component {
         });
     }
 
+    handleChange(event){
+       this.setState({
+           countrySelected: event.target.value
+       });
+    }
+
     render() {
         const sideBarClass  = this.state.isSidebarOpen ? ' sidebar open__sidebar' : 'sidebar';
         const searchBarClass  = this.state.isSearchbarOpen ? ' search__form__open' : 'search__form';
@@ -49,7 +63,14 @@ export default class Nav extends Component {
                 <div id="toggle-sidebar">
                     <img className="burger-icon" src={menuIcon} alt="" onClick={this.sidebarOpen}/>
                 </div>
-                <h1 className="logo">Digifiend</h1>
+                <div className="logo-wrapper">
+                    <h1 className="logo">Digifiend</h1>
+                    <select className="select-country" onChange={this.handleChange}>
+                            <option value="id">INA</option>
+                            <option value="us">USA</option>
+                            <option value="gb">UK</option>
+                    </select>
+                </div>
                 <div id="search-toggle">
                     <img className="search-icon" src={searchIcon} alt="" onClick={this.searchbarOpen}/>
                 </div>
@@ -67,11 +88,14 @@ export default class Nav extends Component {
                             <img className="close__icon" src={backIcon} alt="" onClick={this.sidebarClose}/>
                         </span>
                     </div>
-                
                     <ul className="sidebar__lists">
-                        <li className="sidebar__list">Tech</li>
+                        <li className="sidebar__list">Business</li>
                         <li className="sidebar__list">Entertainment</li>
-                        <li className="sidebar__list">News</li>
+                        <li className="sidebar__list">General</li>
+                        <li className="sidebar__list">Health</li>
+                        <li className="sidebar__list">Science</li>
+                        <li className="sidebar__list">Sports</li>
+                        <li className="sidebar__list">Technology</li>
                     </ul>
                 </div>
             </nav>
@@ -79,3 +103,19 @@ export default class Nav extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => {
+    return {
+      country: state.news.country
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+      onSelectCountry : (country) => {
+        dispatch(selectCountry(country))
+      }
+    }
+} 
+  
+  export default connect(mapStateToProps, mapDispatchToProps)(Nav);
