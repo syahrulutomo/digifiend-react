@@ -5,6 +5,7 @@ import searchIcon from './../img/search.png';
 import backIcon from './../img/arrow_left.png';
 import { connect } from 'react-redux';
 import { selectCountry } from './../actions/selectNation';
+import { Link } from 'react-router-dom';
 
 export  class Nav extends Component {
     constructor(props){
@@ -64,7 +65,7 @@ export  class Nav extends Component {
                     <img className="burger-icon" src={menuIcon} alt="" onClick={this.sidebarOpen}/>
                 </div>
                 <div className="logo-wrapper">
-                    <h1 className="logo">Digifiend</h1>
+                    <Link to="/"><h1 className="logo">Digifiend</h1></Link>
                     <select className="select-country" onChange={this.handleChange}>
                             <option value="id">INA</option>
                             <option value="us">USA</option>
@@ -89,13 +90,13 @@ export  class Nav extends Component {
                         </span>
                     </div>
                     <ul className="sidebar__lists">
-                        <li className="sidebar__list">Business</li>
-                        <li className="sidebar__list">Entertainment</li>
-                        <li className="sidebar__list">General</li>
-                        <li className="sidebar__list">Health</li>
-                        <li className="sidebar__list">Science</li>
-                        <li className="sidebar__list">Sports</li>
-                        <li className="sidebar__list">Technology</li>
+                        <Link to={`/${this.state.countrySelected}/business`}><li className="sidebar__list">Business</li></Link>
+                        <Link to={`/${this.state.countrySelected}/entertainment`}><li className="sidebar__list">Entertainment</li></Link>
+                        <Link to={`/${this.state.countrySelected}/general`}><li className="sidebar__list">General</li></Link>
+                        <Link to={`/${this.state.countrySelected}/health`}><li className="sidebar__list">Health</li></Link>
+                        <Link to={`/${this.state.countrySelected}/science`}><li className="sidebar__list">Science</li></Link>
+                        <Link to={`/${this.state.countrySelected}/sports`}><li className="sidebar__list">Sports</li></Link>
+                        <Link to={`/${this.state.countrySelected}/technology`}><li className="sidebar__list">Technology</li></Link>
                     </ul>
                 </div>
             </nav>

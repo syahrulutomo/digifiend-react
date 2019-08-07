@@ -3,7 +3,7 @@ import {API_KEY} from './../APIkey';
 export const FETCHING_HOME = 'FETCHING_HOME';
 export const RECEIVED_HOME = 'RECEIVED_HOME';
 
-const fetchHome = () => {
+const fetchingHome = () => {
   return {
       type: FETCHING_HOME
   }
@@ -16,10 +16,10 @@ const receivedHome = (data) => {
     }
 }
 
-export const fetchNews = (country) => {
+export const fetchHome = (country) => {
   return function(dispatch) {
 
-    dispatch(fetchHome());
+    dispatch(fetchingHome());
 
     fetch('https://newsapi.org/v2/top-headlines?country='+country+'&apiKey='+API_KEY)
     .then( res => res.json() )

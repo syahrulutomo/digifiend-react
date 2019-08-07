@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import './../index.scss';
-import grey from './../img/grey.jpg';
 import { connect } from 'react-redux';
-import { fetchNews } from './../actions/displayHome';
+import { fetchHome } from './../actions/displayHome';
 import PropTypes from 'prop-types';
 import Article from './Article';
 
@@ -30,8 +29,8 @@ export class Home extends Component {
     }
 
     render(){
-        let latest = this.props.headlines.map((data) =>  <Article data={data} key={data['url']} /> );
-
+        let latest = this.props.headlines.filter(data => data['urlToImage'] !== '').map((data) =>  <a href={data['url']} key={data['url']}><Article data={data}  /></a> );
+        
         return (
           <section className="latest">
                 <h2 className="latest__header">Latest News</h2>
@@ -51,7 +50,7 @@ const mapStateToProps = (state) => {
   const mapDispatchToProps = (dispatch) => {
     return {
       onFetchNews : (country) => {
-        dispatch(fetchNews(country))
+        dispatch(fetchHome(country))
       }
     }
   } 
