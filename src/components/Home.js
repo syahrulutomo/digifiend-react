@@ -8,20 +8,10 @@ import Article from './Article';
 export class Home extends Component {
     constructor(props){
         super(props);
-        this.imageExists = this.imageExists.bind(this);
     }
 
     componentDidMount(){
         this.props.onFetchNews(this.props.country);
-    }
-
-    imageExists(image_url){
-        let response;  
-        fetch(image_url).then(function(res){
-          response = res.status;
-        })
-        
-        return response;
     }
 
     render(){

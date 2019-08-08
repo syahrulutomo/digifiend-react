@@ -9,6 +9,7 @@ import { selectCategory } from './../actions/selectCategory';
 import { Link } from 'react-router-dom';
 import { fetchHome } from './../actions/displayHome';
 import { fetchLatestNews } from './../actions/displayNews';
+import { fetchSearchNews } from './../actions/search';
 
 export  class Nav extends Component {
     constructor(props){
@@ -17,7 +18,8 @@ export  class Nav extends Component {
             isSidebarOpen: false,
             isSearchbarOpen: false,
             countrySelected: 'id',
-            categorySelected: 'business'
+            categorySelected: 'business',
+            query: ''
         }
         this.sidebarOpen = this.sidebarOpen.bind(this);
         this.sidebarClose = this.sidebarClose.bind(this);
@@ -25,6 +27,8 @@ export  class Nav extends Component {
         this.searchbarClose = this.searchbarClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
+        this.searchBoxChange = this.searchBoxChange.bind(this);
+        this.searchClick = this.searchClick.bind(this);
     }
 
     componentDidUpdate(){
@@ -73,7 +77,21 @@ export  class Nav extends Component {
         this.props.onFetchNews2(this.props.country, category);
     }
 
+    searchBoxChange(event){
+        this.setState({
+            query: event.target.value
+        })
+    }
+
+    searchClick(){
+        this.props.onFetchNews3(this.state.query);
+        this.setState({
+            query: ''
+        })
+    }
+
     render() {
+        console.log(this.state.query);
         const sideBarClass  = this.state.isSidebarOpen ? ' sidebar open__sidebar' : 'sidebar';
         const searchBarClass  = this.state.isSearchbarOpen ? ' search__form__open' : 'search__form';
         return (
@@ -94,8 +112,8 @@ export  class Nav extends Component {
                 </div>
                 <div className={searchBarClass}>
                     <div className="search__input-wrapper">
-                        <input className="search__input" type="text" placeholder="search for something"/>
-                        <button className="search__btn"><i className="fas fa-search"></i></button>
+                        <input className="search__input" value={this.state.query} onChange={this.searchBoxChange} type="text" placeholder="search for something"/>
+                        <Link to='/search'><button className="search__btn" onClick={this.searchClick}><i className="fas fa-search"></i></button></Link>
                     </div>
                     <span id="close__search" onClick={this.searchbarClose}><i className="fas fa-times-circle"></i></span> 
                 </div>
@@ -142,6 +160,9 @@ const mapDispatchToProps = (dispatch) => {
       },
       onFetchNews2 : (country, category) => {
         dispatch(fetchLatestNews(country, category))
+      },
+      onFetchNews3 : (query) => {
+        dispatch(fetchSearchNews(query))
       }
     }
 } 
