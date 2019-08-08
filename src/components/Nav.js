@@ -6,6 +6,7 @@ import backIcon from './../img/arrow_left.png';
 import { connect } from 'react-redux';
 import { selectCountry } from './../actions/selectNation';
 import { Link } from 'react-router-dom';
+import { fetchHome } from './../actions/displayHome';
 
 export  class Nav extends Component {
     constructor(props){
@@ -54,6 +55,11 @@ export  class Nav extends Component {
        this.setState({
            countrySelected: event.target.value
        });
+       this.props.onFetchNews(event.target.value);
+    }
+
+    setCategory(event){
+        
     }
 
     render() {
@@ -115,6 +121,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
       onSelectCountry : (country) => {
         dispatch(selectCountry(country))
+      },
+      onFetchNews : (country) => {
+        dispatch(fetchHome(country))
       }
     }
 } 

@@ -1,11 +1,14 @@
 import { FETCHING_HOME, RECEIVED_HOME } from './../actions/displayHome';
-import { SELECT_COUNTRY, selectCountry } from './../actions/selectNation';
+import { FETCHING_NEWS, RECEIVED_NEWS } from './../actions/displayNews';
+import { SELECT_COUNTRY } from './../actions/selectNation';
 import { combineReducers } from 'redux';
 
 const defaultState = {
     isLoading: false,
     headlines: [],
     country: 'id',
+    news: [],
+    category: 'sports'
 }
 
 const newsReducer = (state = defaultState, action) => {
@@ -14,6 +17,10 @@ const newsReducer = (state = defaultState, action) => {
             return Object.assign({}, state, { isLoading: true });
         case RECEIVED_HOME:
             return Object.assign({}, state, { isLoading: false, headlines: [...action.payload] });
+        case FETCHING_NEWS:
+            return Object.assign({}, state, { isLoading: true });
+        case RECEIVED_NEWS:
+            return Object.assign({}, state, { isLoading: false, news: [...action.payload] });
         case SELECT_COUNTRY:
             return Object.assign({}, state, { country: action.payload });
         default: 

@@ -15,10 +15,6 @@ export class Home extends Component {
         this.props.onFetchNews(this.props.country);
     }
 
-    componentDidUpdate(){
-      this.props.onFetchNews(this.props.country);
-    }
-
     imageExists(image_url){
         let response;  
         fetch(image_url).then(function(res){
