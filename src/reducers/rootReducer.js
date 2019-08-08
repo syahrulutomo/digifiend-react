@@ -1,6 +1,7 @@
 import { FETCHING_HOME, RECEIVED_HOME } from './../actions/displayHome';
 import { FETCHING_NEWS, RECEIVED_NEWS } from './../actions/displayNews';
 import { SELECT_COUNTRY } from './../actions/selectNation';
+import { SELECT_CATEGORY } from './../actions/selectCategory';
 import { combineReducers } from 'redux';
 
 const defaultState = {
@@ -8,7 +9,7 @@ const defaultState = {
     headlines: [],
     country: 'id',
     news: [],
-    category: 'sports'
+    category: 'business'
 }
 
 const newsReducer = (state = defaultState, action) => {
@@ -23,6 +24,8 @@ const newsReducer = (state = defaultState, action) => {
             return Object.assign({}, state, { isLoading: false, news: [...action.payload] });
         case SELECT_COUNTRY:
             return Object.assign({}, state, { country: action.payload });
+        case SELECT_CATEGORY:
+            return Object.assign({}, state, { category: action.payload });
         default: 
             return state;
     }

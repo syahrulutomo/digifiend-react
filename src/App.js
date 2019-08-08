@@ -12,6 +12,7 @@ function App() {
       <Nav/> 
       <Switch>
         <Route path="/" exact component={Home} />
+        <Route path="/:category" component={News} />
         <Route path="/:country/:category" component={News} />
       </Switch>
     </div>

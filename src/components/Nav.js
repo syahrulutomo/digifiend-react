@@ -5,8 +5,10 @@ import searchIcon from './../img/search.png';
 import backIcon from './../img/arrow_left.png';
 import { connect } from 'react-redux';
 import { selectCountry } from './../actions/selectNation';
+import { selectCategory } from './../actions/selectCategory';
 import { Link } from 'react-router-dom';
 import { fetchHome } from './../actions/displayHome';
+import { fetchLatestNews } from './../actions/displayNews';
 
 export  class Nav extends Component {
     constructor(props){
@@ -14,17 +16,20 @@ export  class Nav extends Component {
         this.state = {
             isSidebarOpen: false,
             isSearchbarOpen: false,
-            countrySelected: 'id'
+            countrySelected: 'id',
+            categorySelected: 'business'
         }
         this.sidebarOpen = this.sidebarOpen.bind(this);
         this.sidebarClose = this.sidebarClose.bind(this);
         this.searchbarOpen = this.searchbarOpen.bind(this);
         this.searchbarClose = this.searchbarClose.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleClick = this.handleClick.bind(this);
     }
 
     componentDidUpdate(){
         this.props.onSelectCountry(this.state.countrySelected);
+        this.props.onSelectCategory(this.state.categorySelected);
     }
 
     sidebarOpen(){
@@ -55,11 +60,17 @@ export  class Nav extends Component {
        this.setState({
            countrySelected: event.target.value
        });
+       this.props.onSelectCountry(this.state.countrySelected);
        this.props.onFetchNews(event.target.value);
+       this.props.onFetchNews2(event.target.value, this.props.category);
     }
 
-    setCategory(event){
-        
+    handleClick(event){
+        let category = event.target.getAttribute('data-category');
+        this.setState({
+            categorySelected: category
+        });
+        this.props.onFetchNews2(this.props.country, category);
     }
 
     render() {
@@ -96,13 +107,13 @@ export  class Nav extends Component {
                         </span>
                     </div>
                     <ul className="sidebar__lists">
-                        <Link to={`/${this.state.countrySelected}/business`}><li className="sidebar__list">Business</li></Link>
-                        <Link to={`/${this.state.countrySelected}/entertainment`}><li className="sidebar__list">Entertainment</li></Link>
-                        <Link to={`/${this.state.countrySelected}/general`}><li className="sidebar__list">General</li></Link>
-                        <Link to={`/${this.state.countrySelected}/health`}><li className="sidebar__list">Health</li></Link>
-                        <Link to={`/${this.state.countrySelected}/science`}><li className="sidebar__list">Science</li></Link>
-                        <Link to={`/${this.state.countrySelected}/sports`}><li className="sidebar__list">Sports</li></Link>
-                        <Link to={`/${this.state.countrySelected}/technology`}><li className="sidebar__list">Technology</li></Link>
+                        <Link to='/business'><li onClick={this.handleClick} data-category="business" className="sidebar__list">Business</li></Link>
+                        <Link to='/entertainment'><li onClick={this.handleClick} data-category="entertainment" className="sidebar__list">Entertainment</li></Link>
+                        <Link to='/general'><li onClick={this.handleClick} data-category="general" className="sidebar__list">General</li></Link>
+                        <Link to='/health'><li onClick={this.handleClick} data-category="health" className="sidebar__list">Health</li></Link>
+                        <Link to='/science'><li onClick={this.handleClick} data-category="science" className="sidebar__list">Science</li></Link>
+                        <Link to='/sports'><li onClick={this.handleClick} data-category="sports" className="sidebar__list">Sports</li></Link>
+                        <Link to='/technology'><li onClick={this.handleClick} data-category="technology" className="sidebar__list">Technology</li></Link>
                     </ul>
                 </div>
             </nav>
@@ -113,7 +124,8 @@ export  class Nav extends Component {
 
 const mapStateToProps = (state) => {
     return {
-      country: state.news.country
+      country: state.news.country,
+      category: state.news.category
     }
 }
 
@@ -122,8 +134,14 @@ const mapDispatchToProps = (dispatch) => {
       onSelectCountry : (country) => {
         dispatch(selectCountry(country))
       },
+      onSelectCategory : (category) => {
+        dispatch(selectCategory(category))
+      },
       onFetchNews : (country) => {
         dispatch(fetchHome(country))
+      },
+      onFetchNews2 : (country, category) => {
+        dispatch(fetchLatestNews(country, category))
       }
     }
 } 

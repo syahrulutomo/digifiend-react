@@ -14,17 +14,12 @@ export class News extends Component {
         this.props.onFetchNews(this.props.country, this.props.category);
     }
 
-    componentDidUpdate(){
-      // this.props.onFetchNews(this.props.country, this.props.category);
-    }
-
     render(){
         let latest = this.props.news.map((data) =>  <a href={data['url']} key={data['url']}><Article data={data}  /></a> );
-        
         return (
           <section className="latest">
                 <h2 className="latest__header">Latest News</h2>
-                {/* {latest} */}
+                {latest}
             </section>
         )
     }

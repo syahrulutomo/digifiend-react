@@ -25,7 +25,6 @@ export const fetchLatestNews = (country,category) => {
     .then( res => res.json() )
     .then( data => {
       const results = data['articles'];
-      console.log(results);
       dispatch(receivedNews(results)); 
     });
 
