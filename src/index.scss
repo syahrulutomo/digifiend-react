@@ -81,6 +81,11 @@ nav{
 		.select-country{
 			height: 100%;
 			margin: 1.25rem .5rem 0 0;
+			background-color: transparent;
+			border: none;
+			border-bottom: 1px solid white;
+			padding-bottom: .25rem;
+			color: #de3a3a;
 
 			option[value="id"]{
 				background: url('./img/id.svg');
