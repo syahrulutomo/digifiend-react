@@ -1,13 +1,7 @@
 import React, { Component } from 'react'
 import './../index.scss';
-import grey from './../img/grey.jpg';
-import PropTypes from 'prop-types';
 
 export class Article extends Component {
-    constructor(props){
-        super(props);
-    }
-
     render() {
         return (
           <article className="latest__item">

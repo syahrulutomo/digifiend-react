@@ -6,10 +6,6 @@ import PropTypes from 'prop-types';
 import Article from './Article';
 
 export class News extends Component {
-    constructor(props){
-        super(props);
-    }
-
     componentDidMount(){
         this.props.onFetchNews(this.props.country, this.props.category);
     }

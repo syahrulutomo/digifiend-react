@@ -4,7 +4,7 @@ import Home from './components/Home';
 import News from './components/News';
 import Search from './components/Search';
 import './App.css';
-import { BrowserRouter as Router , Route,  Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router , Route, Switch } from 'react-router-dom';
 
 function App() {
   return (
